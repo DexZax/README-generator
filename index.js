@@ -1,7 +1,8 @@
 // packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateMarkdown = require('./utils/generateMarkdown')
+const generateMarkdown = require('./utils/generateMarkdown');
+const Choice = require('inquirer/lib/objects/choice');
 
 // Questions for user input
 const questions = [];
@@ -10,7 +11,7 @@ const promptQuestions = () => {
         {
             type: 'input',
             name: 'title',
-            message: 'what is the title of your Project?',
+            message: 'What is the title of your Project?',
             validate: nameInput => {
                 if (nameInput) {
                   return true;
@@ -60,9 +61,18 @@ const promptQuestions = () => {
               }
         },
         {
-            type: 'input',
+            type: 'checkbox',
             name: 'license',
-            message: 'Are there any licenses you need to include?'
+            message: 'Are there any licenses you need to include?',
+            choices: ['MIT', 'Apache', 'GPL'],
+            validate: nameInput => {
+              if (nameInput) {
+                return true;
+              } else {
+                console.log('Please choose a license!');
+                return false;
+              }
+            }
         },
         {
             type: 'input',
@@ -78,12 +88,8 @@ const promptQuestions = () => {
             type: 'input',
             name: 'email',
             message: 'Please provide your email for any questions people may have.'
-        },
-        {
-            type: 'input',
-            name: 'links',
-            message: 'Please provide your github link to the repo and your depolyed live link.'
         }
+  
        
     ])
 }
@@ -103,11 +109,6 @@ promptQuestions()
   })
 
 
-// TODO: Create a function to initialize app
-function init() {}
-
-// Function call to initialize app
-init();
 
 
 
